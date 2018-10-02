@@ -1,0 +1,13 @@
+[
+    {
+        "description": "minLength validation",
+        "schema": {"minLength": 2},
+        "tests": [
+            {
+                "description": "one supplementary Unicode code point is not long enough",
+                "data": "\uD83D\uDCA9",
+                "valid": false
+            }
+        ]
+    }
+]

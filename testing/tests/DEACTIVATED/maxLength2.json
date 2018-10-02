@@ -1,0 +1,13 @@
+[
+    {
+        "description": "maxLength validation",
+        "schema": {"maxLength": 2},
+        "tests": [
+            {
+                "description": "two supplementary Unicode code points is long enough",
+                "data": "\uD83D\uDCA9\uD83D\uDCA9",
+                "valid": true
+            }
+        ]
+    }
+]
