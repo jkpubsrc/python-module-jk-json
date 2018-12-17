@@ -4,6 +4,8 @@
 
 import json as __json
 
+from .ObjectEncoder import ObjectEncoder
+
 from .Token import Token
 from .TokenStream import TokenStream
 from .TokenizerBase import TokenizerBase
@@ -89,30 +91,30 @@ def loadFromFile(filePath, bStrict = False, bDebugging = False):
 # @param		str indent			The indentation to use
 # @param		bool sort_keys		It ```True``` sort the properties
 #
-def dumps(jsonObj, indent=None, sort_keys=False, linePrefix=None):
+def dumps(jsonObj, indent=None, sort_keys=False, linePrefix=None, cls=None):
 	# for now we rely on the default json serializer/deserializer
 	if indent is None:
-		return __json.dumps(jsonObj, indent=None, separators=(',', ':'), sort_keys=sort_keys)
+		return __json.dumps(jsonObj, indent=None, separators=(',', ':'), sort_keys=sort_keys, cls=cls)
 	else:
 		if linePrefix is None:
-			return __json.dumps(jsonObj, indent=indent, sort_keys=sort_keys)
+			return __json.dumps(jsonObj, indent=indent, sort_keys=sort_keys, cls=cls)
 		else:
-			lines = __json.dumps(jsonObj, indent=indent, sort_keys=sort_keys).split("\n")
+			lines = __json.dumps(jsonObj, indent=indent, sort_keys=sort_keys, cls=cls).split("\n")
 			ret = linePrefix + ("\n" + linePrefix).join(lines) + "\n"
 			return ret
 #
 
 
 
-def dump(jsonObj, f, indent=None, sort_keys=False, linePrefix=None):
+def dump(jsonObj, f, indent=None, sort_keys=False, linePrefix=None, cls=None):
 	# for now we rely on the default json serializer/deserializer
 	if indent is None:
-		return __json.dump(jsonObj, f, indent=None, separators=(',', ':'), sort_keys=sort_keys)
+		return __json.dump(jsonObj, f, indent=None, separators=(',', ':'), sort_keys=sort_keys, cls=cls)
 	else:
 		if linePrefix is None:
-			return __json.dump(jsonObj, f, indent=indent, sort_keys=sort_keys)
+			return __json.dump(jsonObj, f, indent=indent, sort_keys=sort_keys, cls=cls)
 		else:
-			lines = __json.dump(jsonObj, f, indent=indent, sort_keys=sort_keys).split("\n")
+			lines = __json.dump(jsonObj, f, indent=indent, sort_keys=sort_keys, cls=cls).split("\n")
 			ret = linePrefix + lines.join("\n" + linePrefix) + "\n"
 			return ret
 #
@@ -127,8 +129,16 @@ def saveToFile(jsonObj, filePath, indent=None, sort_keys=False, linePrefix=None)
 
 
 
+def saveToFilePretty(jsonObj, filePath, linePrefix=None):
+	with open(filePath, "w", encoding="utf-8") as f:
+		dump(jsonObj, f, indent="\t", sort_keys=True, linePrefix=linePrefix, cls=ObjectEncoder)
+		#__json.dump(jsonObj, f, indent=indent, sort_keys=sort_keys)
+#
+
+
+
 def prettyPrint(jsonObj):
-	print(dumps(jsonObj, indent="\t", sort_keys=True))
+	print(dumps(jsonObj, indent="\t", sort_keys=True, cls=ObjectEncoder))
 #
 
 
