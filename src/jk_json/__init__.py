@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 
+import gzip
 import json as __json
+import bz2
+
+import chardet
 
 from .ObjectEncoder import ObjectEncoder
 
@@ -37,7 +40,11 @@ __tokenizerStrict = TokenizerStrict()
 #								are allowed and strings can be specified with single quotes and double quotes.
 #								Furthermore NaN, positive and negative infinitiy is supported.
 #
-def loads(textToParse, bStrict = False, bDebugging = False):
+def loads(textToParse:str, bStrict:bool = False, bDebugging:bool = False):
+	assert isinstance(textToParse, str)
+	assert isinstance(bStrict, bool)
+	assert isinstance(bDebugging, bool)
+
 	if isinstance(textToParse, (bytes, bytearray)):
 		textToParse = textToParse.decode("utf-8")
 	elif not isinstance(textToParse, str):
@@ -77,9 +84,27 @@ def load(fp, bStrict = False, bDebugging = False):
 #								are allowed and strings can be specified with single quotes and double quotes.
 #								Furthermore NaN, positive and negative infinitiy is supported.
 #
-def loadFromFile(filePath, bStrict = False, bDebugging = False):
-	with open(filePath, "r", encoding="utf-8") as f:
-		return loads(f.read(), bStrict = bStrict, bDebugging = bDebugging)
+def loadFromFile(filePath:str, bStrict:bool = False, bDebugging:bool = False, encoding:str = None, autoDetectEncoding:bool = True):
+	assert isinstance(filePath, str)
+	assert isinstance(bStrict, bool)
+	assert isinstance(bDebugging, bool)
+
+	if filePath.endswith(".bz2"):
+		with bz2.open(filePath, "rb") as f:
+			rawData = f.read()
+	elif filePath.endswith(".gz"):
+		with gzip.open(filePath, "rb") as f:
+			rawData = f.read()
+	else:
+		with open(filePath, "rb") as f:
+			rawData = f.read()
+
+	if encoding is None:
+		if autoDetectEncoding:
+			encoding = chardet.detect(rawData)["encoding"]
+		else:
+			encoding = "utf-8"
+	return loads(rawData.decode(encoding), bStrict = bStrict, bDebugging = bDebugging)
 #
 
 
@@ -107,6 +132,8 @@ def dumps(jsonObj, indent=None, sort_keys=False, linePrefix=None, cls=None):
 
 
 def dump(jsonObj, f, indent=None, sort_keys=False, linePrefix=None, cls=None):
+	assert isinstance(jsonObj, (str, int, float, bool, list, dict))
+
 	# for now we rely on the default json serializer/deserializer
 	if indent is None:
 		return __json.dump(jsonObj, f, indent=None, separators=(',', ':'), sort_keys=sort_keys, cls=cls)
@@ -122,6 +149,8 @@ def dump(jsonObj, f, indent=None, sort_keys=False, linePrefix=None, cls=None):
 
 
 def saveToFile(jsonObj, filePath, indent=None, sort_keys=False, linePrefix=None):
+	assert isinstance(jsonObj, (str, int, float, bool, list, dict))
+
 	with open(filePath, "w", encoding="utf-8") as f:
 		dump(jsonObj, f, indent=indent, sort_keys=sort_keys, linePrefix=linePrefix)
 		#__json.dump(jsonObj, f, indent=indent, sort_keys=sort_keys)
@@ -129,7 +158,12 @@ def saveToFile(jsonObj, filePath, indent=None, sort_keys=False, linePrefix=None)
 
 
 
-def saveToFilePretty(jsonObj, filePath, linePrefix=None):
+def saveToFilePretty(jsonObj, filePath:str, linePrefix=None):
+	assert isinstance(jsonObj, (str, int, float, bool, list, dict))
+	assert isinstance(filePath, str)
+	if linePrefix is not None:
+		assert isinstance(linePrefix, str)
+
 	with open(filePath, "w", encoding="utf-8") as f:
 		dump(jsonObj, f, indent="\t", sort_keys=True, linePrefix=linePrefix, cls=ObjectEncoder)
 		#__json.dump(jsonObj, f, indent=indent, sort_keys=sort_keys)
@@ -138,6 +172,8 @@ def saveToFilePretty(jsonObj, filePath, linePrefix=None):
 
 
 def prettyPrint(jsonObj):
+	assert isinstance(jsonObj, (str, int, float, bool, list, dict))
+
 	print(dumps(jsonObj, indent="\t", sort_keys=True, cls=ObjectEncoder))
 #
 
@@ -145,7 +181,7 @@ def prettyPrint(jsonObj):
 
 
 
-__version__ = "0.2018.12.28"
+__version__ = "0.2019.9100"
 
 
 

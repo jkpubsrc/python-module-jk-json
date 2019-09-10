@@ -7,7 +7,7 @@ def readme():
 
 
 setup(name="jk_json",
-	version="0.2018.12.28",
+	version="0.2019.9.10",
 	description="This python module provides parser and validator for JSON files and data structures. "
 		+ "The JSON parser is designed as a drop-in replacement for the built in python JSON parser as this parser here supports using comments in JSON files "
 		+ "(which in some use cases is very a very handy feature).",
@@ -27,6 +27,7 @@ setup(name="jk_json",
 		"jk_jsonschema",
 		],
 	install_requires=[
+		"chardet"
 	],
 	include_package_data=True,
 	classifiers=[

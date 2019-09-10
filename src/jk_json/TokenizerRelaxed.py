@@ -44,7 +44,7 @@ class TokenizerRelaxed(TokenizerBase):
 		tableINSTRING1.setOther([ TA.appendElementToBuffer(), TA.advance() ])
 		tableINSTRING1.setEOS([ TA.error("T0002", "Syntax error! Unexpected EOS in string!", 2) ])
 
-		tableINSTRING1MASKED.addPatternRow(TP.regEx(r"u[0-9a-fA-F]{4}"),						[ TA.appendElementToBuffer(self.__convert4HexToUnicode), TA.advance(), TA.switchMode(tableINSTRING2.tableID) ])
+		tableINSTRING1MASKED.addPatternRow(TP.regEx(r"u[0-9a-fA-F]{4}"),						[ TA.appendElementToBuffer(self.__convert4HexToUnicode), TA.advance(), TA.switchMode(tableINSTRING1.tableID) ])
 		tableINSTRING1MASKED.addPatternRow(TP.exactChar("\\"),									[ TA.appendTextToBuffer("\\"), TA.advance(), TA.switchMode(tableINSTRING1.tableID) ])
 		tableINSTRING1MASKED.addPatternRow(TP.exactChar("n"),									[ TA.appendTextToBuffer("\n"), TA.advance(), TA.switchMode(tableINSTRING1.tableID) ])
 		tableINSTRING1MASKED.addPatternRow(TP.exactChar("r"),									[ TA.appendTextToBuffer("\r"), TA.advance(), TA.switchMode(tableINSTRING1.tableID) ])
