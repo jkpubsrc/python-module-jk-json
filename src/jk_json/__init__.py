@@ -102,6 +102,8 @@ def loadFromFile(filePath:str, bStrict:bool = False, bDebugging:bool = False, en
 	if encoding is None:
 		if autoDetectEncoding:
 			encoding = chardet.detect(rawData)["encoding"]
+			if encoding is None:
+				encoding = "utf-8"
 		else:
 			encoding = "utf-8"
 	return loads(rawData.decode(encoding), bStrict = bStrict, bDebugging = bDebugging)
@@ -171,10 +173,10 @@ def saveToFilePretty(jsonObj, filePath:str, linePrefix=None):
 
 
 
-def prettyPrint(jsonObj):
+def prettyPrint(jsonObj, linePrefix=None):
 	assert isinstance(jsonObj, (str, int, float, bool, list, dict))
 
-	print(dumps(jsonObj, indent="\t", sort_keys=True, cls=ObjectEncoder))
+	print(dumps(jsonObj, indent="\t", sort_keys=True, linePrefix=linePrefix, cls=ObjectEncoder))
 #
 
 

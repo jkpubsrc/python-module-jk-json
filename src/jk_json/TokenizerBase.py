@@ -271,6 +271,9 @@ class TokenizerBase(object):
 
 		buffer = ""
 		mode = 0
+		spanText = None
+		nextLineNo = 0
+		nextCharPos = 0
 
 		while i < maxi:
 			if bDebuggingEnabled:
@@ -381,7 +384,7 @@ class TokenizerBase(object):
 				bufferCharPos = charPos
 				buffer = ""
 			elif actionID == TokenizerAction.APPENDELEMENTTOBUFFER:
-				if actionData != None:
+				if actionData is None:
 					buffer += actionData(spanText)
 				else:
 					buffer += spanText
