@@ -1,0 +1,59 @@
+{
+	"language": "python3",
+	"name": "jk_json",
+	"version": "0.2020.1.20",
+	"meta": {
+		"description": "This python module provides parser and validator for JSON files and data structures. The JSON parser is designed as a drop-in replacement for the built in python JSON parser as this parser here supports using comments in JSON files (which in some use cases is very a very handy feature).",
+		"keywords": [
+			"json",
+			"parsing",
+			"schema"
+		],
+		"license": "Apache 2.0",
+		"development_status": "stable",
+		"authors": [
+			{
+				"name": "Jürgen Knauth",
+				"email": "pubsrc@binary-overflow.de"
+			}
+		],
+		"wiki": {
+			"page": "DevDocs:jk_json"
+		}
+	},
+	"repositories": [
+		{
+			"type": "github",
+			"user": "jkpubsrc",
+			"project": "python-module-jk-json",
+			"devon_publish": false
+		},
+		{
+			"type": "pypy",
+			"project": "jk_json",
+			"devon_publish": false
+		}
+	],
+	"source": {
+		"packages": [
+			"jk_json",
+			"jk_json.tools",
+			"jk_jsonschema"
+		],
+		"extra_data_files": [
+			"data/*",
+			"data/html_default/*",
+			"data/html_default/files/*",
+			"data/html_default/files/images/*",
+			"data/html_default/templates/*"
+		]
+	},
+	"requirements": {
+		"python_packages": [
+			"chardet"
+		],
+		"python_packages_dev": [
+		]
+	}
+}
+

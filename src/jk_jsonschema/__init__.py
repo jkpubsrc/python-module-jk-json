@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 
@@ -71,4 +71,8 @@ def loadJSONFromFileAndValidate(filePath, bStrict = False, bDebugging = False, v
 
 
 
+
+
+
+__version__ = "0.2020.1.20"
 

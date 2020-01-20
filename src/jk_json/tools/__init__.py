@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 
@@ -9,4 +9,8 @@ from .tools import TYPE_NULL, TYPE_BOOL, TYPE_INT, TYPE_FLOAT, TYPE_STR, TYPE_AR
 
 
 
+
+
+
+__version__ = "0.2020.1.20"
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 
 
 import gzip
@@ -183,7 +183,6 @@ def prettyPrint(jsonObj, linePrefix=None):
 
 
 
-__version__ = "0.2019.9100"
-
+__version__ = "0.2020.1.20"
 
 
