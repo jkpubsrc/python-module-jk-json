@@ -1,5 +1,4 @@
-﻿#!/usr/bin/env python3
-
+﻿
 
 import gzip
 import json as __json
@@ -119,6 +118,8 @@ def loadFromFile(filePath:str, bStrict:bool = False, bDebugging:bool = False, en
 # @param		bool sort_keys		It ```True``` sort the properties
 #
 def dumps(jsonObj, indent=None, sort_keys=False, linePrefix=None, cls=None):
+	assert isinstance(jsonObj, (str, int, float, bool, list, dict, type(None)))
+
 	# for now we rely on the default json serializer/deserializer
 	if indent is None:
 		return __json.dumps(jsonObj, indent=None, separators=(',', ':'), sort_keys=sort_keys, cls=cls)
@@ -134,7 +135,7 @@ def dumps(jsonObj, indent=None, sort_keys=False, linePrefix=None, cls=None):
 
 
 def dump(jsonObj, f, indent=None, sort_keys=False, linePrefix=None, cls=None):
-	assert isinstance(jsonObj, (str, int, float, bool, list, dict))
+	assert isinstance(jsonObj, (str, int, float, bool, list, dict, type(None)))
 
 	# for now we rely on the default json serializer/deserializer
 	if indent is None:
@@ -151,7 +152,7 @@ def dump(jsonObj, f, indent=None, sort_keys=False, linePrefix=None, cls=None):
 
 
 def saveToFile(jsonObj, filePath, indent=None, sort_keys=False, linePrefix=None):
-	assert isinstance(jsonObj, (str, int, float, bool, list, dict))
+	assert isinstance(jsonObj, (str, int, float, bool, list, dict, type(None)))
 
 	with open(filePath, "w", encoding="utf-8") as f:
 		dump(jsonObj, f, indent=indent, sort_keys=sort_keys, linePrefix=linePrefix)
@@ -161,7 +162,7 @@ def saveToFile(jsonObj, filePath, indent=None, sort_keys=False, linePrefix=None)
 
 
 def saveToFilePretty(jsonObj, filePath:str, linePrefix=None):
-	assert isinstance(jsonObj, (str, int, float, bool, list, dict))
+	assert isinstance(jsonObj, (str, int, float, bool, list, dict, type(None)))
 	assert isinstance(filePath, str)
 	if linePrefix is not None:
 		assert isinstance(linePrefix, str)
@@ -174,7 +175,7 @@ def saveToFilePretty(jsonObj, filePath:str, linePrefix=None):
 
 
 def prettyPrint(jsonObj, linePrefix=None):
-	assert isinstance(jsonObj, (str, int, float, bool, list, dict))
+	assert isinstance(jsonObj, (str, int, float, bool, list, dict, type(None)))
 
 	print(dumps(jsonObj, indent="\t", sort_keys=True, linePrefix=linePrefix, cls=ObjectEncoder))
 #
@@ -183,6 +184,5 @@ def prettyPrint(jsonObj, linePrefix=None):
 
 
 
-__version__ = "0.2020.1.20"
-
+__version__ = "0.2020.2.14"
 

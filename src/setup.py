@@ -23,7 +23,7 @@ setup(
 		"License :: OSI Approved :: Apache Software License",
 	],
 	description = "This python module provides parser and validator for JSON files and data structures. The JSON parser is designed as a drop-in replacement for the built in python JSON parser as this parser here supports using comments in JSON files (which in some use cases is very a very handy feature).",
-	download_url = "https://github.com/jkpubsrc/python-module-jk-json/tarball/0.2020.1.20",
+	download_url = "https://github.com/jkpubsrc/python-module-jk-json/tarball/0.2020.2.14",
 	include_package_data = True,
 	install_requires = [
 		"chardet",
@@ -50,7 +50,7 @@ setup(
 		"jk_jsonschema",
 	],
 	url = "https://github.com/jkpubsrc/python-module-jk-json",
-	version = "0.2020.1.20",
+	version = "0.2020.2.14",
 	zip_safe = False,
 	long_description = readme(),
 	long_description_content_type="text/markdown",
