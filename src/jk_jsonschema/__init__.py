@@ -74,4 +74,4 @@ def loadJSONFromFileAndValidate(filePath, bStrict = False, bDebugging = False, v
 
 
 
-__version__ = "0.2020.2.14"
+__version__ = "0.2020.3.4"
