@@ -1,5 +1,9 @@
 ﻿
 
+__version__ = "0.2020.4.14"
+
+
+
 import gzip
 import json as __json
 import bz2
@@ -88,6 +92,7 @@ def loadFromFile(filePath:str, bStrict:bool = False, bDebugging:bool = False, en
 	assert isinstance(bStrict, bool)
 	assert isinstance(bDebugging, bool)
 
+	print(filePath)
 	if filePath.endswith(".bz2"):
 		with bz2.open(filePath, "rb") as f:
 			rawData = f.read()
@@ -98,14 +103,23 @@ def loadFromFile(filePath:str, bStrict:bool = False, bDebugging:bool = False, en
 		with open(filePath, "rb") as f:
 			rawData = f.read()
 
+	textData = None
+
 	if encoding is None:
 		if autoDetectEncoding:
-			encoding = chardet.detect(rawData)["encoding"]
-			if encoding is None:
-				encoding = "utf-8"
+			try:
+				textData = rawData.decode("utf-8")
+			except:
+				encoding = chardet.detect(rawData)["encoding"]
+				if encoding is None:
+					encoding = "utf-8"
 		else:
 			encoding = "utf-8"
-	return loads(rawData.decode(encoding), bStrict = bStrict, bDebugging = bDebugging)
+
+	if textData is None:
+		textData = rawData.decode(encoding)
+
+	return loads(textData, bStrict = bStrict, bDebugging = bDebugging)
 #
 
 
@@ -182,6 +196,3 @@ def prettyPrint(jsonObj, linePrefix=None):
 
 
 
-
-
-__version__ = "0.2020.3.4"

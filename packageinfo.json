@@ -1,7 +1,7 @@
 {
 	"language": "python3",
 	"name": "jk_json",
-	"version": "0.2020.3.4",
+	"version": "0.2020.4.14",
 	"meta": {
 		"description": "This python module provides parser and validator for JSON files and data structures. The JSON parser is designed as a drop-in replacement for the built in python JSON parser as this parser here supports using comments in JSON files (which in some use cases is very a very handy feature).",
 		"keywords": [
@@ -46,6 +46,9 @@
 			"data/html_default/files/*",
 			"data/html_default/files/images/*",
 			"data/html_default/templates/*"
+		],
+		"extra_binary_files": [
+			"bin/jsonPrettyPrint.py",
 		]
 	},
 	"requirements": {
