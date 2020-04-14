@@ -1,6 +1,6 @@
 ﻿
 
-__version__ = "0.2020.4.14"
+__version__ = "0.2020.4.14.1"
 
 
 
@@ -92,7 +92,6 @@ def loadFromFile(filePath:str, bStrict:bool = False, bDebugging:bool = False, en
 	assert isinstance(bStrict, bool)
 	assert isinstance(bDebugging, bool)
 
-	print(filePath)
 	if filePath.endswith(".bz2"):
 		with bz2.open(filePath, "rb") as f:
 			rawData = f.read()
@@ -193,6 +192,5 @@ def prettyPrint(jsonObj, linePrefix=None):
 
 	print(dumps(jsonObj, indent="\t", sort_keys=True, linePrefix=linePrefix, cls=ObjectEncoder))
 #
-
 
 
