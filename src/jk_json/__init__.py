@@ -1,6 +1,6 @@
 ﻿
 
-__version__ = "0.2020.4.14.1"
+__version__ = "0.2020.7.7"
 
 
 
@@ -74,7 +74,8 @@ def loads(textToParse:str, bStrict:bool = False, bDebugging:bool = False):
 #								Furthermore NaN, positive and negative infinitiy is supported.
 #
 def load(fp, bStrict = False, bDebugging = False):
-	return loads(fp.read(), bStrict = bStrict, bDebugging = bDebugging)
+	rawData = fp.read()
+	return loads(rawData, bStrict = bStrict, bDebugging = bDebugging)
 #
 
 
@@ -107,11 +108,16 @@ def loadFromFile(filePath:str, bStrict:bool = False, bDebugging:bool = False, en
 	if encoding is None:
 		if autoDetectEncoding:
 			try:
+				if rawData.startswith(b"\xef\xbb\xbf"):		# utf-8 byte order mark
+					rawData = rawData[3:]
+
 				textData = rawData.decode("utf-8")
+
 			except:
 				encoding = chardet.detect(rawData)["encoding"]
 				if encoding is None:
 					encoding = "utf-8"
+
 		else:
 			encoding = "utf-8"
 
@@ -192,5 +198,4 @@ def prettyPrint(jsonObj, linePrefix=None):
 
 	print(dumps(jsonObj, indent="\t", sort_keys=True, linePrefix=linePrefix, cls=ObjectEncoder))
 #
-
 
