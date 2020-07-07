@@ -49,6 +49,7 @@
 		],
 		"extra_binary_files": [
 			"bin/jsonPrettyPrint.py",
+			"bin/jkjson.py",
 		]
 	},
 	"requirements": {

@@ -38,7 +38,7 @@ ap.createOption(None, 'no-color', "Dont' use colors in output.").onOption = \
 ap.createOption(None, 'stdin', "Read JSON data from stdin.").onOption = \
 	lambda argOption, argOptionArguments, parsedArgs: \
 		parsedArgs.optionData.set("stdin", True)
-ap.createOption(None, 'extract', "Extract a sprific part of the data object.").expectString("spath", 1).onOption = \
+ap.createOption(None, 'extract', "Extract a specific part of the data object.").expectString("spath", 1).onOption = \
 	lambda argOption, argOptionArguments, parsedArgs: \
 		parsedArgs.optionData.set("extractionPath", jk_flexdata.FlexDataSelector(argOptionArguments[0]))
 

@@ -51,6 +51,7 @@ setup(
 	],
 	scripts = [
 		"bin/jsonPrettyPrint.py",
+		"bin/jkjson.py",
 	],
 	url = "https://github.com/jkpubsrc/python-module-jk-json",
 	version = "0.2020.7.7",
