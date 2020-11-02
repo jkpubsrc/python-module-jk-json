@@ -13,8 +13,8 @@ jk_logging.COLOR_LOG_MESSAGE_FORMATTER.setOutputMode(jk_logging.ColoredLogMessag
 
 
 
-gen = jk_jsonschema.createSchemaGenerator()
-with gen.subCategory("abc") as c:
+gen = jk_jsonschema.createObjectSchemaGenerator()
+with gen.objectValue("abc") as c:
 	c.strValue("cde")
 schema = jk_jsonschema.SchemaParser.parse(gen.schema, log)
 

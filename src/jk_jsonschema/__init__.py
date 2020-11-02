@@ -1,12 +1,15 @@
-﻿#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+﻿
+
+
+__version__ = "0.2020.11.2"
 
 
 
-
+from .schema_validator import Validator
 from .SchemaParser import SchemaParser
-from .SimpleSchemaGenerator import createSchemaGenerator, ObjectGenerator, ListGenerator,	\
-			StringGenerator, FloatGenerator, IntegerGenerator, BooleanGenerator, AbstractGenerator
+from .SimpleSchemaGenerator import createObjectSchemaGenerator, createSchemaGenerator, \
+	AbstractGenerator, \
+	ObjectGenerator, ListGenerator,	StringGenerator, FloatGenerator, IntegerGenerator, BooleanGenerator
 
 
 
@@ -70,8 +73,3 @@ def loadJSONFromFileAndValidate(filePath, bStrict = False, bDebugging = False, v
 
 
 
-
-
-
-
-__version__ = "0.2020.7.7"

@@ -161,7 +161,7 @@ class _Validator(AbstractElementaryValidator):
 		self._default = True
 	#
 
-	def validate(self, ctx:ValidationContext, jsonData):
+	def validate(self, ctx:ValidationContext, jsonData) -> bool:
 		t = getTypeIDOfValue(jsonData)
 		if not self._validators[t].validate(ctx, jsonData):
 			return False
@@ -171,7 +171,7 @@ class _Validator(AbstractElementaryValidator):
 		return self._default
 	#
 
-	def validate2(self, ctx:ValidationContext2, jsonData):
+	def validate2(self, ctx:ValidationContext2, jsonData) -> tuple:
 		t = getTypeIDOfValue(jsonData)
 
 		retSuccess, retStackTrace = self._validators[t].validate2(ctx, jsonData)
@@ -222,7 +222,7 @@ class Validator(object):
 	#
 	# @return	bool bValidationResult		Returns `True` or `False`.
 	#
-	def validate(self, jsonData):
+	def validate(self, jsonData) -> bool:
 		return self.__validator.validate(ValidationContext(), jsonData)
 	#
 
@@ -232,7 +232,7 @@ class Validator(object):
 	# @return	bool bValidationResult				Returns `True` or `False`.
 	# @return	ValidatorStackTrace stackTrace		If validation failed returns a stack trace object. Otherwise `None` is returned.
 	#
-	def validate2(self, jsonData):
+	def validate2(self, jsonData) -> tuple:
 		return self.__validator.validate2(ValidationContext2(), jsonData)
 	#
 

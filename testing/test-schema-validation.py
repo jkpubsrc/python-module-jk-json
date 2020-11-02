@@ -14,7 +14,7 @@ jk_logging.COLOR_LOG_MESSAGE_FORMATTER.setOutputMode(jk_logging.ColoredLogMessag
 
 
 
-gen = jk_jsonschema.createSchemaGenerator()
+gen = jk_jsonschema.createObjectSchemaGenerator()
 jsonSchema = gen.schema
 
 

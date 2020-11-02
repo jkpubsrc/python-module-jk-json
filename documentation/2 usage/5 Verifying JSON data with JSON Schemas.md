@@ -105,7 +105,7 @@ jsonData = {
 	"cde": 123
 }
 
-gen = jk_jsonschema.createSchemaGenerator()
+gen = jk_jsonschema.createObjectSchemaGenerator()
 gen.strValue("abc")
 gen.intValue("cde")
 jsonSchemaData = gen.schema

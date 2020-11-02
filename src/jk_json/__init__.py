@@ -1,6 +1,6 @@
 ﻿
 
-__version__ = "0.2020.7.7"
+__version__ = "0.2020.11.2"
 
 
 
@@ -198,4 +198,3 @@ def prettyPrint(jsonObj, linePrefix=None):
 
 	print(dumps(jsonObj, indent="\t", sort_keys=True, linePrefix=linePrefix, cls=ObjectEncoder))
 #
-

@@ -16,12 +16,12 @@ Create a Schema Generator
 In order to produce schemas you need to instantiate a schema generator first. This is done with the following Python code:
 
 ```python
-gen = jk_jsonschema.createSchemaGenerator()
+gen = jk_jsonschema.createObjectSchemaGenerator()
 ```
 
 Note: This function will provide an object for schema generation. As possibly maybe sometimes there might be different implementations in the future, all generation of objects is performed by this method. Please always use this factory method as it will be adapted to future implementations if necessary.
 
-Defeine the Expectations
+Define the Expectations
 ------------------------
 
 After having generated a schema generator you can use it to define your schemas.
@@ -32,7 +32,7 @@ This default schema generator assumes you want to produce a schema matching an o
 
 The object generator provides the following methods:
 
-* `subCategory(name:str, bRequired:bool) -> ObjectGenerator`
+* `objectValue(name:str, bRequired:bool) -> ObjectGenerator`
 	* Expect the current object matched later by the schema to have a key with name `name`.
 	* Depending on `bRequired` this key later on is required or optional.
 	* The value of this key should again be an **object**.
@@ -68,14 +68,14 @@ All methods return a new generator object.
 For convenience the object generator can be used in a `with` context. Example:
 
 ```python
-with gen.subCategory("abc") as c:
+with gen.objectValue("abc") as c:
 	c.strValue("cde")
 ```
 
 The code above has the following meaning:
 * An object is expected. (Objects are always expected by default).
-* Then this object must have an `abc` key (=> `subCategory()`, no `bRequired=False` is specified).
-* For this key another object is expected (=> `subCategory()`).
+* Then this object must have an `abc` key (=> `objectValue()`, no `bRequired=False` is specified).
+* For this key another object is expected (=> `objectValue()`).
 * This value object at this key must itself have a key named `cde` (=> `strValue()`).
 * At this key a value of type *string* (=> `strValue()`) must be provided.
 
@@ -232,7 +232,7 @@ The code above has the following meaning:
 ### Complex Example
 
 ```python
-with gen.subCategory("abc") as c:
+with gen.objectValue("abc") as c:
 	c.strValue("cde")
 ```
 

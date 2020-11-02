@@ -6,3 +6,4 @@ include data/html_default/*
 include data/html_default/files/*
 include data/html_default/files/images/*
 include data/html_default/templates/*
+

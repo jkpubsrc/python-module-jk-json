@@ -1,44 +1,53 @@
 {
-	"language": "python3",
-	"name": "jk_json",
-	"version": "0.2020.7.7",
+	"documentation": [],
+	"magic": {
+		"magic": "packageinfo",
+		"version": 2
+	},
 	"meta": {
+		"authors": [
+			{
+				"email": "pubsrc@binary-overflow.de",
+				"name": "J\u00fcrgen Knauth"
+			}
+		],
 		"description": "This python module provides parser and validator for JSON files and data structures. The JSON parser is designed as a drop-in replacement for the built in python JSON parser as this parser here supports using comments in JSON files (which in some use cases is very a very handy feature).",
+		"development_status": "stable",
 		"keywords": [
 			"json",
 			"parsing",
 			"schema"
 		],
-		"license": "Apache 2.0",
-		"development_status": "stable",
-		"authors": [
-			{
-				"name": "Jürgen Knauth",
-				"email": "pubsrc@binary-overflow.de"
-			}
-		],
-		"wiki": {
-			"page": "DevDocs:jk_json"
-		}
+		"language": "python3",
+		"license": "Apache2",
+		"name": "jk_json",
+		"packageClass": "python-module",
+		"version": "0.2020.11.2"
 	},
 	"repositories": [
 		{
-			"type": "github",
-			"user": "jkpubsrc",
+			"devon_publish": false,
 			"project": "python-module-jk-json",
-			"devon_publish": false
+			"type": "github",
+			"user": "jkpubsrc"
 		},
 		{
-			"type": "pypy",
+			"devon_publish": false,
 			"project": "jk_json",
-			"devon_publish": false
+			"type": "pypi"
 		}
 	],
+	"requirements": {
+		"python_packages": [
+			"chardet"
+		],
+		"python_packages_dev": [],
+		"system_apt_packages": []
+	},
 	"source": {
-		"packages": [
-			"jk_json",
-			"jk_json.tools",
-			"jk_jsonschema"
+		"extra_binary_files": [
+			"bin/jsonPrettyPrint.py",
+			"bin/jkjson.py"
 		],
 		"extra_data_files": [
 			"data/*",
@@ -47,17 +56,10 @@
 			"data/html_default/files/images/*",
 			"data/html_default/templates/*"
 		],
-		"extra_binary_files": [
-			"bin/jsonPrettyPrint.py",
-			"bin/jkjson.py",
-		]
-	},
-	"requirements": {
-		"python_packages": [
-			"chardet"
-		],
-		"python_packages_dev": [
+		"packages": [
+			"jk_json",
+			"jk_json.tools",
+			"jk_jsonschema"
 		]
 	}
 }
-
