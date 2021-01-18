@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 
 
@@ -30,7 +28,7 @@ ALL_TYPES_SET = frozenset(ALL_TYPES_LIST)
 
 
 
-def getTypeID(typeName:str):
+def getTypeID(typeName:str) -> int:
 	if typeName == "null":
 		return TYPE_NULL
 	if typeName == "boolean":
@@ -55,7 +53,7 @@ def getTypeIDs(typeNames:list):
 	return ret
 #
 
-def getTypeIDOfType(pythonType:type):
+def getTypeIDOfType(pythonType:type) -> int:
 	if (pythonType is None) or (pythonType is type(None)):
 		return TYPE_NULL
 	if pythonType == bool:
@@ -73,7 +71,7 @@ def getTypeIDOfType(pythonType:type):
 	raise Exception("Invalid type: " + str(pythonType))
 #
 
-def getTypeIDOfTypeNonInt(pythonType:type):
+def getTypeIDOfTypeNonInt(pythonType:type) -> int:
 	if (pythonType is None) or (pythonType is type(None)):
 		return TYPE_NULL
 	if pythonType == bool:
@@ -84,12 +82,12 @@ def getTypeIDOfTypeNonInt(pythonType:type):
 		return TYPE_STR
 	if (pythonType == list) or (pythonType == tuple):
 		return TYPE_ARRAY
-	if pythonType == dict:
+	if pythonType == object:
 		return TYPE_OBJECT
 	raise Exception("Invalid type: " + str(pythonType))
 #
 
-def getTypeIDOfValue(value):
+def getTypeIDOfValue(value) -> int:
 	if value is None:
 		return TYPE_NULL
 	if isinstance(value, bool):
@@ -107,7 +105,7 @@ def getTypeIDOfValue(value):
 	raise Exception("Invalid type: " + str(type(value)))
 #
 
-def getTypeIDOfValueNonInt(value):
+def getTypeIDOfValueNonInt(value) -> int:
 	if value is None:
 		return TYPE_NULL
 	if isinstance(value, bool):

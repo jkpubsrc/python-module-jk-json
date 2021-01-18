@@ -1,7 +1,7 @@
 ﻿
 
 
-__version__ = "0.2020.11.2"
+__version__ = "0.2021.1.18"
 
 
 
@@ -64,7 +64,6 @@ def loadJSONFromFileAndValidate(filePath, bStrict = False, bDebugging = False, v
 		with open(filePath, "r", encoding="utf-8") as f:
 			return jk_json.loads(f.read(), bStrict = bStrict, bDebugging = bDebugging)
 #
-
 
 
 

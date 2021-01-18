@@ -1,5 +1,5 @@
 #
-# Note: This is a copy of jk_utils.re
+# Note: This is a copy of jk_utils.re in order to avoid dependencies.
 #
 
 import re
