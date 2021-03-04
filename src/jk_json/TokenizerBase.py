@@ -337,7 +337,7 @@ class TokenizerBase(object):
 
 			for actionID, actionData in selectedActions:
 				if actionID == TokenizerAction.ERROR:
-					raise ParserErrorException(SourceCodeLocation(sourceID, lineNo, charPos, lineNo, charPos), actionData)
+					raise ParserErrorException(SourceCodeLocation(sourceID, lineNo, charPos, lineNo, charPos), actionData, textData)
 				elif actionID == TokenizerAction.ADVANCE:
 					lineNo = nextLineNo
 					charPos = nextCharPos
@@ -370,7 +370,7 @@ class TokenizerBase(object):
 		currentTable = self.__tables[mode]
 		for actionID, actionData in currentTable.onEOSActions:
 			if actionID == TokenizerAction.ERROR:
-				raise ParserErrorException(SourceCodeLocation(sourceID, lineNo, charPos, lineNo, charPos), actionData)
+				raise ParserErrorException(SourceCodeLocation(sourceID, lineNo, charPos, lineNo, charPos), actionData, textData)
 			elif actionID == TokenizerAction.ADVANCE:
 				lineNo = nextLineNo
 				charPos = nextCharPos

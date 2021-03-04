@@ -1,7 +1,7 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 
+
+import typing
 
 from .SourceCodeLocation import *
 
@@ -10,8 +10,22 @@ from .SourceCodeLocation import *
 
 class ParserErrorException(Exception):
 
-	def __init__(self, location, message):
+	################################################################################################################################
+	## Constructor
+	################################################################################################################################
+
+	#
+	# Constructor method.
+	#
+	def __init__(self, location:SourceCodeLocation, message, textData:str = None):
 		assert isinstance(location, SourceCodeLocation)
+		assert isinstance(message, str)
+		if textData:
+			lines = textData.split("\n")
+			self.__textLine = lines[location.lineNo]
+			assert isinstance(textData, str)
+		else:
+			self.__textLine = None
 
 		super().__init__(str(location) + " :: " + message)
 
@@ -19,15 +33,32 @@ class ParserErrorException(Exception):
 		self.__message = message
 	#
 
+	################################################################################################################################
+	## Public Properties
+	################################################################################################################################
+
 	@property
-	def location(self):
+	def location(self) -> SourceCodeLocation:
 		return self.__location
 	#
 
 	@property
-	def message(self):
+	def textLine(self) -> typing.Union[str,None]:
+		return self.__textLine
+	#
+
+	@property
+	def message(self) -> str:
 		return self.__message
 	#
+
+	################################################################################################################################
+	## Helper Methods
+	################################################################################################################################
+
+	################################################################################################################################
+	## Public Methods
+	################################################################################################################################
 
 #
 

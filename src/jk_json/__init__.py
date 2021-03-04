@@ -1,6 +1,6 @@
 ﻿
 
-__version__ = "0.2021.1.18"
+__version__ = "0.2021.3.4"
 
 
 
@@ -88,7 +88,7 @@ def load(fp, bStrict = False, bDebugging = False):
 #								are allowed and strings can be specified with single quotes and double quotes.
 #								Furthermore NaN, positive and negative infinitiy is supported.
 #
-def loadFromFile(filePath:str, bStrict:bool = False, bDebugging:bool = False, encoding:str = None, autoDetectEncoding:bool = True):
+def loadFromFile(filePath:str, bStrict:bool = False, bDebugging:bool = False, encoding:str = None, autoDetectEncoding:bool = True, errPrintFunc = None):
 	assert isinstance(filePath, str)
 	assert isinstance(bStrict, bool)
 	assert isinstance(bDebugging, bool)
@@ -124,7 +124,18 @@ def loadFromFile(filePath:str, bStrict:bool = False, bDebugging:bool = False, en
 	if textData is None:
 		textData = rawData.decode(encoding)
 
-	return loads(textData, bStrict = bStrict, bDebugging = bDebugging)
+	if errPrintFunc and callable(errPrintFunc):
+		try:
+			return loads(textData, bStrict = bStrict, bDebugging = bDebugging)
+		except ParserErrorException as ee:
+			s = filePath if len(filePath) < 40 else ("..." + filePath[-40:])
+			prefix = "{}:{} ".format(s, ee.location.lineNo + 1)
+			errPrintFunc(prefix + ee.textLine.replace("\t", " "))
+			errPrintFunc(" " * (len(prefix) + ee.location.charPos + 1) + "ᐃ")
+			errPrintFunc(" " * (len(prefix) + ee.location.charPos + 1 - 6) + "╌╌╍╍━━┛")
+			raise
+	else:
+		return loads(textData, bStrict = bStrict, bDebugging = bDebugging)
 #
 
 

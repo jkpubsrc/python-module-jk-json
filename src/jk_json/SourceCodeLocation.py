@@ -1,9 +1,8 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 
 
 
+import typing
 
 from .Token import *
 
@@ -14,7 +13,7 @@ from .Token import *
 
 class SourceCodeLocation(object):
 
-	def __init__(self, sourceID, lineNo, charPos, endLineNo, endCharPos):
+	def __init__(self, sourceID:typing.Union[str,None], lineNo:int, charPos:int, endLineNo:int, endCharPos:int):
 		self.sourceID = sourceID
 		self.lineNo = lineNo
 		self.charPos = charPos
