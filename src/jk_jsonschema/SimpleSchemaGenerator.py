@@ -286,7 +286,7 @@ class ListGenerator(AbstractGenerator):
 
 	@property
 	def dataType(self) -> AbstractGenerator:
-		if len(__subGenList) == 1:
+		if len(self.__subGenList) == 1:
 			return self.__subGenList[0]
 		else:
 			raise Exception("There are multiple types defined!")

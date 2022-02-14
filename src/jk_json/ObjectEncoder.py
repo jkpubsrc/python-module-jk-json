@@ -1,3 +1,6 @@
+
+
+
 import json
 import inspect
 
@@ -8,6 +11,8 @@ class ObjectEncoder(json.JSONEncoder):
 	def default(self, obj):
 		if hasattr(obj, "to_json"):
 			return self.default(obj.to_json())
+		elif hasattr(obj, "toJSON"):
+			return self.default(obj.toJSON())
 		elif hasattr(obj, "__dict__"):
 			d = dict(
 				(key, value)

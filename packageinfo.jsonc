@@ -22,7 +22,7 @@
 		"license": "Apache2",
 		"name": "jk_json",
 		"packageClass": "python-module",
-		"version": "0.2021.3.17"
+		"version": "0.2022.2.14"
 	},
 	"repositories": [
 		{

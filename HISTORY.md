@@ -3,3 +3,13 @@
 
 * 2021-03-17
 	* Updated README.md
+
+* 2022-02-14
+	* Corrected minor parsing flaws
+	* Added support for comments in output
+	* Added `prettyPrintToStr()`
+
+
+
+
+

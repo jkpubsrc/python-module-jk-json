@@ -13,6 +13,14 @@ from .Token import *
 
 class SourceCodeLocation(object):
 
+	################################################################################################################################
+	## Constants
+	################################################################################################################################
+
+	################################################################################################################################
+	## Constructor
+	################################################################################################################################
+
 	def __init__(self, sourceID:typing.Union[str,None], lineNo:int, charPos:int, endLineNo:int, endCharPos:int):
 		self.sourceID = sourceID
 		self.lineNo = lineNo
@@ -20,6 +28,18 @@ class SourceCodeLocation(object):
 		self.endLineNo = endLineNo
 		self.endCharPos = endCharPos
 	#
+
+	################################################################################################################################
+	## Properties
+	################################################################################################################################
+
+	################################################################################################################################
+	## Helper Methods
+	################################################################################################################################
+
+	################################################################################################################################
+	## Public Methods
+	################################################################################################################################
 
 	def __str__(self):
 		if self.sourceID != None:
@@ -35,6 +55,16 @@ class SourceCodeLocation(object):
 			return "(" + str(self.lineNo + 1) + ":" + str(self.charPos + 1) + ")"
 	#
 
+	def spanTo(self, sourceCodeLocation):
+		assert isinstance(sourceCodeLocation, SourceCodeLocation)
+
+		return SourceCodeLocation(self.sourceID, self.lineNo, self.charPos, sourceCodeLocation.endLineNo, sourceCodeLocation.endCharPos)
+	#
+
+	################################################################################################################################
+	## Static Methods
+	################################################################################################################################
+
 	@staticmethod
 	def fromTokens(tokenA, tokenB):
 		assert isinstance(tokenA, Token)
@@ -48,12 +78,6 @@ class SourceCodeLocation(object):
 		assert isinstance(token, Token)
 
 		return SourceCodeLocation(token.sourceID, token.lineNo, token.charPos, token.endLineNo, token.endCharPos)
-	#
-
-	def spanTo(self, sourceCodeLocation):
-		assert isinstance(sourceCodeLocation, SourceCodeLocation)
-
-		return SourceCodeLocation(self.sourceID, self.lineNo, self.charPos, sourceCodeLocation.endLineNo, sourceCodeLocation.endCharPos)
 	#
 
 #

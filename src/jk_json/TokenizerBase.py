@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 
 import re
@@ -286,6 +284,9 @@ class TokenizerBase(object):
 			spanLength = None
 			spanText = None
 			iEnd = None
+
+			# try to match
+
 			for patternID, patternData, patternDataLength, actions in currentTable.rows:
 				if patternID == TokenizerPattern.EXACTCHAR:
 					if textData[i] == patternData:
@@ -320,11 +321,15 @@ class TokenizerBase(object):
 				else:
 					raise Exception()
 
+			# no match? => advance one character
+
 			if selectedActions is None:
 				spanLength = 1
 				iEnd = i + 1
 				spanText = textData[i]
 				selectedActions = currentTable.onOtherActions
+
+			# set correct line number and character position
 
 			nextLineNo = lineNo
 			nextCharPos = charPos
@@ -334,6 +339,8 @@ class TokenizerBase(object):
 					nextCharPos = 0
 				else:
 					nextCharPos += 1
+
+			# perform parsing actions
 
 			for actionID, actionData in selectedActions:
 				if actionID == TokenizerAction.ERROR:
@@ -351,7 +358,7 @@ class TokenizerBase(object):
 					bufferCharPos = charPos
 					buffer = ""
 				elif actionID == TokenizerAction.APPENDELEMENTTOBUFFER:
-					if actionData != None:
+					if actionData is not None:
 						buffer += actionData(spanText)
 					else:
 						buffer += spanText
@@ -367,7 +374,14 @@ class TokenizerBase(object):
 				else:
 					raise Exception()
 
+		# EOS reached
+
 		currentTable = self.__tables[mode]
+		iEnd = len(textData)
+
+		# perform final parsing actions
+
+		# NOTE: the next lines are identical with the branching above
 		for actionID, actionData in currentTable.onEOSActions:
 			if actionID == TokenizerAction.ERROR:
 				raise ParserErrorException(SourceCodeLocation(sourceID, lineNo, charPos, lineNo, charPos), actionData, textData)
@@ -384,7 +398,7 @@ class TokenizerBase(object):
 				bufferCharPos = charPos
 				buffer = ""
 			elif actionID == TokenizerAction.APPENDELEMENTTOBUFFER:
-				if actionData is None:
+				if actionData is not None:
 					buffer += actionData(spanText)
 				else:
 					buffer += spanText

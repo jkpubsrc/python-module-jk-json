@@ -1,12 +1,13 @@
 ﻿
 
-__version__ = "0.2021.3.17"
+__version__ = "0.2022.2.14"
 
 
 
-import gzip
 import json as __json
+import gzip
 import bz2
+import typing
 
 import chardet
 
@@ -147,65 +148,201 @@ def loadFromFile(filePath:str, bStrict:bool = False, bDebugging:bool = False, en
 # @param		str indent			The indentation to use
 # @param		bool sort_keys		It ```True``` sort the properties
 #
-def dumps(jsonObj, indent=None, sort_keys=False, linePrefix=None, cls=None):
-	assert isinstance(jsonObj, (str, int, float, bool, tuple, list, dict, type(None)))
+def dumps(
+		jsonObj:typing.Union[str,int,float,bool,tuple,list,dict],
+		indent:str = None,
+		sort_keys:bool = False,
+		linePrefix:str = None,
+		cls = None,
+		comment:typing.Union[typing.List[str],typing.Tuple[str],str] = None,
+	):
+
+	assert isinstance(jsonObj, (str,int,float,bool,tuple,list,dict,None))
+
+	if indent is not None:
+		assert isinstance(indent, str)
+
+	if sort_keys is not None:
+		assert isinstance(sort_keys, bool)
+
+	if linePrefix is not None:
+		assert isinstance(linePrefix, str)
+
+	if comment:
+		if isinstance(comment, str):
+			comment = [ str ]
+		elif isinstance(comment, list):
+			for x in comment:
+				if not isinstance(x, str):
+					raise Exception("fileComment has data of invalid type!")
+		elif isinstance(comment, tuple):
+			for x in comment:
+				if not isinstance(x, str):
+					raise Exception("fileComment has data of invalid type!")
+			comment = list(comment)
+		else:
+			raise Exception("fileComment has data of invalid type!")
+
+	# ----
 
 	# for now we rely on the default json serializer/deserializer
 	if indent is None:
 		return __json.dumps(jsonObj, indent=None, separators=(',', ':'), sort_keys=sort_keys, cls=cls)
 	else:
 		if linePrefix is None:
-			return __json.dumps(jsonObj, indent=indent, sort_keys=sort_keys, cls=cls)
+			if comment:
+				sRet = "/*\n" + "\n".join(comment) + "\n*/\n"
+			else:
+				sRet = ""
+
+			sRet += __json.dumps(jsonObj, indent=indent, sort_keys=sort_keys, cls=cls)
+			return sRet
+
 		else:
-			lines = __json.dumps(jsonObj, indent=indent, sort_keys=sort_keys, cls=cls).split("\n")
+			if comment:
+				lines = [ "/*" ] + comment + [ "*/" ]
+			else:
+				lines = []
+
+			lines += __json.dumps(jsonObj, indent=indent, sort_keys=sort_keys, cls=cls).split("\n")
+
 			ret = linePrefix + ("\n" + linePrefix).join(lines) + "\n"
 			return ret
 #
 
 
 
-def dump(jsonObj, f, indent=None, sort_keys=False, linePrefix=None, cls=None):
-	assert isinstance(jsonObj, (str, int, float, bool, tuple, list, dict, type(None)))
+def dump(
+		jsonObj:typing.Union[str,int,float,bool,tuple,list,dict],
+		f,
+		indent:str = None,
+		sort_keys:bool = False,
+		linePrefix:str = None,
+		cls = None,
+		comment:typing.Union[typing.List[str],typing.Tuple[str],str] = None,
+	):
+
+	assert isinstance(jsonObj, (str,int,float,bool,tuple,list,dict,None))
+
+	if indent is not None:
+		assert isinstance(indent, str)
+
+	if sort_keys is not None:
+		assert isinstance(sort_keys, bool)
+
+	if linePrefix is not None:
+		assert isinstance(linePrefix, str)
+
+	if comment:
+		if isinstance(comment, str):
+			comment = [ str ]
+		elif isinstance(comment, list):
+			for x in comment:
+				if not isinstance(x, str):
+					raise Exception("fileComment has data of invalid type!")
+		elif isinstance(comment, tuple):
+			for x in comment:
+				if not isinstance(x, str):
+					raise Exception("fileComment has data of invalid type!")
+			comment = list(comment)
+		else:
+			raise Exception("fileComment has data of invalid type!")
+
+	# ----
 
 	# for now we rely on the default json serializer/deserializer
 	if indent is None:
 		return __json.dump(jsonObj, f, indent=None, separators=(',', ':'), sort_keys=sort_keys, cls=cls)
 	else:
 		if linePrefix is None:
-			return __json.dump(jsonObj, f, indent=indent, sort_keys=sort_keys, cls=cls)
+			if comment:
+				sRet = "/*\n" + "\n".join(comment) + "\n*/\n"
+			else:
+				sRet = ""
+
+			sRet += __json.dump(jsonObj, f, indent=indent, sort_keys=sort_keys, cls=cls)
+			return sRet
+
 		else:
-			lines = __json.dump(jsonObj, f, indent=indent, sort_keys=sort_keys, cls=cls).split("\n")
+			if comment:
+				lines = [ "/*" ] + comment + [ "*/" ]
+			else:
+				lines = []
+
+			lines += __json.dump(jsonObj, f, indent=indent, sort_keys=sort_keys, cls=cls).split("\n")
+
 			ret = linePrefix + lines.join("\n" + linePrefix) + "\n"
 			return ret
 #
 
 
 
-def saveToFile(jsonObj, filePath, indent=None, sort_keys=False, linePrefix=None):
-	assert isinstance(jsonObj, (str, int, float, bool, tuple, list, dict, type(None)))
+def saveToFile(
+		jsonObj:typing.Union[str,int,float,bool,tuple,list,dict],
+		filePath:str,
+		indent:str = None,
+		sort_keys:bool = False,
+		linePrefix:str = None,
+	):
 
-	with open(filePath, "w", encoding="utf-8") as f:
+	assert isinstance(filePath, str)
+
+	# ----
+
+	with open(filePath, "w", encoding="utf-8", newline="\n") as f:
 		dump(jsonObj, f, indent=indent, sort_keys=sort_keys, linePrefix=linePrefix)
 		#__json.dump(jsonObj, f, indent=indent, sort_keys=sort_keys)
 #
 
 
 
-def saveToFilePretty(jsonObj, filePath:str, linePrefix=None):
-	assert isinstance(jsonObj, (str, int, float, bool, tuple, list, dict, type(None)))
-	assert isinstance(filePath, str)
-	if linePrefix is not None:
-		assert isinstance(linePrefix, str)
+def saveToFilePretty(
+		jsonObj:typing.Union[str,int,float,bool,tuple,list,dict],
+		filePath:str,
+		linePrefix:str = None,
+		comment:typing.Union[typing.List[str],typing.Tuple[str],str] = None,
+	):
 
-	with open(filePath, "w", encoding="utf-8") as f:
-		dump(jsonObj, f, indent="\t", sort_keys=True, linePrefix=linePrefix, cls=ObjectEncoder)
+	assert isinstance(filePath, str)
+	if comment:
+		if isinstance(comment, str):
+			comment = [ str ]
+		elif isinstance(comment, (tuple,list)):
+			for x in comment:
+				if not isinstance(x, str):
+					raise Exception("fileComment has data of invalid type!")
+		else:
+			raise Exception("fileComment has data of invalid type!")
+
+	# ----
+
+	with open(filePath, "w", encoding="utf-8", newline="\n") as f:
+		dump(jsonObj, f, indent="\t", sort_keys=True, linePrefix=linePrefix, cls=ObjectEncoder, comment=comment)
 		#__json.dump(jsonObj, f, indent=indent, sort_keys=sort_keys)
 #
 
 
 
-def prettyPrint(jsonObj, linePrefix=None):
-	assert isinstance(jsonObj, (str, int, float, bool, tuple, list, dict, type(None)))
+def prettyPrint(
+		jsonObj:typing.Union[str,int,float,bool,tuple,list,dict],
+		linePrefix:str = None,
+		comment:typing.Union[typing.List[str],typing.Tuple[str],str] = None,
+	):
 
-	print(dumps(jsonObj, indent="\t", sort_keys=True, linePrefix=linePrefix, cls=ObjectEncoder))
+	print(dumps(jsonObj, indent="\t", sort_keys=True, linePrefix=linePrefix, cls=ObjectEncoder, comment=comment))
+#
+
+
+
+def prettyPrintToStr(
+		jsonObj:typing.Union[str,int,float,bool,tuple,list,dict],
+		linePrefix:str = None,
+		comment:typing.Union[typing.List[str],typing.Tuple[str],str] = None,
+	) -> str:
+
+	return dumps(jsonObj, indent="\t", sort_keys=True, linePrefix=linePrefix, cls=ObjectEncoder, comment=comment)
+#
+
+
+
 #

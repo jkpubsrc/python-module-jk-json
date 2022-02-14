@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 
 
@@ -95,7 +93,7 @@ class TokenStream(object):
 		assert isinstance(tokenType, str)
 
 		n = 0
-		while True:
+		while self.__pos < self.__maxpos:
 			t = self.__tokens[self.__pos]
 			if t.type == "eos":
 				return n
@@ -106,9 +104,13 @@ class TokenStream(object):
 					return n
 			n += 1
 			self.__pos += 1
+
+		return n
 	#
 
-	def _setPosition(self, pos):
+	def _setPosition(self, pos:int):
+		if (pos < 0) or (pos > self.__maxpos):
+			raise Exception("Invalid position: " + str(pos))
 		self.__pos = pos
 	#
 
