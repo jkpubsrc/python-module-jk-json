@@ -9,6 +9,8 @@
 	* Added support for comments in output
 	* Added `prettyPrintToStr()`
 
+* 2022-02-16
+	* Fixed new bug introduced at writing to binary streams
 
 
 

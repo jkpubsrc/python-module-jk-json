@@ -53,7 +53,7 @@ setup(
 		"bin/jsonPrettyPrint.py",
 		"bin/jkjson.py",
 	],
-	version = "0.2022.2.14",
+	version = "0.2022.2.16",
 	zip_safe = False,
 	long_description = readme(),
 	long_description_content_type="text/markdown",

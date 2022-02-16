@@ -1,6 +1,6 @@
 ﻿
 
-__version__ = "0.2022.2.14"
+__version__ = "0.2022.2.16"
 
 
 
@@ -257,11 +257,9 @@ def dump(
 		if linePrefix is None:
 			if comment:
 				sRet = "/*\n" + "\n".join(comment) + "\n*/\n"
-			else:
-				sRet = ""
+				f.write(sRet)
 
-			sRet += __json.dump(jsonObj, f, indent=indent, sort_keys=sort_keys, cls=cls)
-			return sRet
+			__json.dump(jsonObj, f, indent=indent, sort_keys=sort_keys, cls=cls)
 
 		else:
 			if comment:
@@ -269,10 +267,15 @@ def dump(
 			else:
 				lines = []
 
-			lines += __json.dump(jsonObj, f, indent=indent, sort_keys=sort_keys, cls=cls).split("\n")
+			lines += __json.dumps(jsonObj, indent=indent, sort_keys=sort_keys, cls=cls).split("\n")
 
 			ret = linePrefix + lines.join("\n" + linePrefix) + "\n"
-			return ret
+			if "b" in f.mode:
+				# it is a binary file that we write to
+				f.write(ret.encode("utf-8"))
+			else:
+				# it is a text file that we write to
+				f.write(ret)
 #
 
 
