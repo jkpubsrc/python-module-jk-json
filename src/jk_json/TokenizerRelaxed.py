@@ -14,6 +14,7 @@ class TokenizerRelaxed(TokenizerBase):
 		tables = self.createTables(8)
 		tableNRM, tableINLINECOMMENT, tableINBLOCKCOMMENT, tableINSTRING1, tableINSTRING1MASKED, tableINSTRING2, tableINSTRING2MASKED, tableINSTRING3 = tables
 
+		tableNRM.addPatternRow(TP.exactChar("\r"),										[ TA.advance() ])
 		tableNRM.addPatternRow(TP.exactChar("\n"),										[ TA.advance() ])
 		tableNRM.addPatternRow(TP.anyOfTheseChars(" \t"),								[ TA.advance() ])
 		tableNRM.addPatternRow(TP.regEx(r"[+-]?0?\.[0-9]+([Ee][+-]?[1-9][0-9]+)?"),		[ TA.emitElement("f"), TA.advance() ])
@@ -31,10 +32,12 @@ class TokenizerRelaxed(TokenizerBase):
 		tableNRM.setOther([ TA.error("T0003", "Syntax error! Failed to tokenize a character sequence!", 1) ])
 		tableNRM.setEOS([ TA.emitElement("eos") ])
 
+		tableINLINECOMMENT.addPatternRow(TP.exactChar("\r"),							[ TA.advance() ])
 		tableINLINECOMMENT.addPatternRow(TP.exactChar("\n"),							[ TA.dropBuffer(), TA.switchMode(tableNRM.tableID) ])
 		tableINLINECOMMENT.setOther([ TA.appendElementToBuffer(), TA.advance() ])
 		tableINLINECOMMENT.setEOS([ TA.dropBuffer(), TA.switchMode(tableNRM.tableID) ])
 
+		tableINBLOCKCOMMENT.addPatternRow(TP.exactChar("\r"),							[ TA.advance() ])
 		tableINBLOCKCOMMENT.addPatternRow(TP.exactSequence("*/"),						[ TA.dropBuffer(), TA.advance(), TA.switchMode(tableNRM.tableID) ])
 		tableINBLOCKCOMMENT.setOther([ TA.appendElementToBuffer(), TA.advance() ])
 		tableINBLOCKCOMMENT.setEOS([ TA.error("T0004", "Syntax error! Unexpected EOS in block comment!", 2) ])

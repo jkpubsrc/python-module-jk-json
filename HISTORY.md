@@ -12,6 +12,7 @@
 * 2022-02-16
 	* Fixed new bug introduced at writing to binary streams
 
-
+* 2022-03-ß2
+	* Added tolerance to Windows line endings
 
 

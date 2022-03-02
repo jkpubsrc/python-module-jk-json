@@ -14,6 +14,7 @@ class TokenizerStrict(TokenizerBase):
 		tables = self.createTables(3)
 		tableNRM, tableINSTRING2, tableINSTRING2MASKED = tables
 
+		tableNRM.addPatternRow(TP.exactChar("\r"),										[ TA.advance() ])
 		tableNRM.addPatternRow(TP.exactChar("\n"),										[ TA.advance() ])
 		tableNRM.addPatternRow(TP.anyOfTheseChars(" \t"),								[ TA.advance() ])
 		tableNRM.addPatternRow(TP.regEx(r"[+-]?0?\.[0-9]+([Ee][+-]?[1-9][0-9]+)?"),		[ TA.emitElement("f"), TA.advance() ])

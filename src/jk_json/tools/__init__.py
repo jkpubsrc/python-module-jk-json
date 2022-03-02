@@ -12,4 +12,4 @@ from .tools import TYPE_NULL, TYPE_BOOL, TYPE_INT, TYPE_FLOAT, TYPE_STR, TYPE_AR
 
 
 
-__version__ = "0.2022.2.16"
+__version__ = "0.2022.3.2"
