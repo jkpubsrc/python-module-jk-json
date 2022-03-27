@@ -12,7 +12,10 @@
 * 2022-02-16
 	* Fixed new bug introduced at writing to binary streams
 
-* 2022-03-ß2
+* 2022-03-02
 	* Added tolerance to Windows line endings
+
+* 2022-03-28
+	* Corrected: Typo in `HISTORY.md`
 
 
