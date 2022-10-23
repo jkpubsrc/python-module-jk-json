@@ -221,7 +221,7 @@ class TokenizerBase(object):
 		for table in tables:
 			assert isinstance(table, TokenizingTable)
 
-		self.__tables = tuple(tables)
+		self.__tables:typing.Tuple[TokenizingTable] = tuple(tables)
 	#
 
 	#
@@ -230,7 +230,7 @@ class TokenizerBase(object):
 	# @param	int numberOfTables		The number of tables to create.
 	# @return	tuple					A tuple containing exactly the number of tables specified.
 	#
-	def createTables(self, numberOfTables):
+	def createTables(self, numberOfTables) -> typing.Tuple[TokenizingTable]:
 		assert isinstance(numberOfTables, int)
 		assert numberOfTables > 1
 
@@ -243,20 +243,11 @@ class TokenizerBase(object):
 	#
 	# Tokenizes the specified string.
 	#
-	# The following token types are supported:
-	# * "d" : Delimiter
-	# * "i" : Integer
-	# * "f" : Float
-	# * "s" : String
-	# * "w" : Word
-	# * "eol" : New line
-	# * "eos" : End of stream
-	#
 	# @param	str textData		The text data to tokenize.
 	# @param	str sourceID		A file path or an URL that defines the origin of the source.
 	# @return	iterator<Token>		Returns an iterator that provides tokens.
 	#
-	def tokenize(self, textData, sourceID = None, bDebuggingEnabled = False):
+	def tokenize(self, textData:str, sourceID:str = None, bDebuggingEnabled = False) -> typing.Iterable[Token]:
 		i = 0
 		maxi = len(textData)
 		lineNo = 0

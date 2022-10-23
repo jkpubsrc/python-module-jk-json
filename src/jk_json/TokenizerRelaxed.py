@@ -12,6 +12,14 @@ class TokenizerRelaxed(TokenizerBase):
 
 	def __init__(self):
 		tables = self.createTables(8)
+		tableNRM:TokenizingTable = None
+		tableINLINECOMMENT:TokenizingTable = None
+		tableINBLOCKCOMMENT:TokenizingTable = None
+		tableINSTRING1:TokenizingTable = None
+		tableINSTRING1MASKED:TokenizingTable = None
+		tableINSTRING2:TokenizingTable = None
+		tableINSTRING2MASKED:TokenizingTable = None
+		tableINSTRING3:TokenizingTable = None
 		tableNRM, tableINLINECOMMENT, tableINBLOCKCOMMENT, tableINSTRING1, tableINSTRING1MASKED, tableINSTRING2, tableINSTRING2MASKED, tableINSTRING3 = tables
 
 		tableNRM.addPatternRow(TP.exactChar("\r"),										[ TA.advance() ])

@@ -18,4 +18,9 @@
 * 2022-03-28
 	* Corrected: Typo in `HISTORY.md`
 
+* 2022-07-03
+	* Refactoring
+
+* 2022-10-23
+	* Fixed: Parameter verification bug
 

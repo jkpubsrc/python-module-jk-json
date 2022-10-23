@@ -1,4 +1,4 @@
-﻿
+
 
 __version__ = "0.2022.3.2"
 
@@ -157,7 +157,8 @@ def dumps(
 		comment:typing.Union[typing.List[str],typing.Tuple[str],str] = None,
 	):
 
-	assert isinstance(jsonObj, (str,int,float,bool,tuple,list,dict,None))
+	if jsonObj is not None:
+		assert isinstance(jsonObj, (str,int,float,bool,tuple,list,dict))
 
 	if indent is not None:
 		assert isinstance(indent, str)
@@ -222,7 +223,8 @@ def dump(
 		comment:typing.Union[typing.List[str],typing.Tuple[str],str] = None,
 	):
 
-	assert isinstance(jsonObj, (str,int,float,bool,tuple,list,dict,None))
+	if jsonObj is not None:
+		assert isinstance(jsonObj, (str,int,float,bool,tuple,list,dict))
 
 	if indent is not None:
 		assert isinstance(indent, str)
@@ -348,4 +350,3 @@ def prettyPrintToStr(
 
 
 
-#

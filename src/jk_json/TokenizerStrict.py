@@ -12,6 +12,9 @@ class TokenizerStrict(TokenizerBase):
 
 	def __init__(self):
 		tables = self.createTables(3)
+		tableNRM:TokenizingTable = None
+		tableINSTRING2:TokenizingTable = None
+		tableINSTRING2MASKED:TokenizingTable = None
 		tableNRM, tableINSTRING2, tableINSTRING2MASKED = tables
 
 		tableNRM.addPatternRow(TP.exactChar("\r"),										[ TA.advance() ])
