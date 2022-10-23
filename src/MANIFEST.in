@@ -1,9 +1,7 @@
 include README.md
 include LICENSE.txt
-
-include data/*
-include data/html_default/*
-include data/html_default/files/*
-include data/html_default/files/images/*
-include data/html_default/templates/*
-
+include 'data/*',
+include 'data/html_default/*',
+include 'data/html_default/files/*',
+include 'data/html_default/files/images/*',
+include 'data/html_default/templates/*',

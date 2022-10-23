@@ -1,5 +1,6 @@
-﻿#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+
+
+
 
 
 from .tools import TYPE_NULL, TYPE_BOOL, TYPE_INT, TYPE_FLOAT, TYPE_STR, TYPE_ARRAY, TYPE_OBJECT, \

@@ -23,4 +23,5 @@
 
 * 2022-10-23
 	* Fixed: Parameter verification bug
+	* Refactoring
 
