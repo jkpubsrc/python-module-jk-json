@@ -11,12 +11,24 @@ from .JsonParserStrict import *
 
 class JsonParserRelaxed(JsonParserStrict):
 
+	################################################################################################################################
+	## Constructor
+	################################################################################################################################
+
 	def __init__(self):
 		pass
 	#
 
+	################################################################################################################################
+	## Public Properties
+	################################################################################################################################
+
+	################################################################################################################################
+	## Helper Methods
+	################################################################################################################################
+
 	@debugDecorator
-	def _tryEat_JVALUE_LIST(self, ctx, ts):
+	def _tryEat_JVALUE_LIST(self, ctx:ParsingContext, ts:TokenStream):
 		# loc = ts.location
 
 		retData = []
@@ -38,7 +50,7 @@ class JsonParserRelaxed(JsonParserStrict):
 	#
 
 	@debugDecorator
-	def _tryEat_JPROPERTY_LIST(self, ctx, ts):
+	def _tryEat_JPROPERTY_LIST(self, ctx:ParsingContext, ts:TokenStream):
 		# loc = ts.location
 
 		retData = {}
@@ -46,8 +58,6 @@ class JsonParserRelaxed(JsonParserStrict):
 		if not bSuccess:
 			return (False, None)
 
-		if parsedData[0] in retData:
-			raise ParserErrorException(ts.location, "Syntax error: Duplicate property name detected: " + repr(parsedData[0]))
 		retData[parsedData[0]] = parsedData[1]
 
 		while True:
@@ -61,9 +71,14 @@ class JsonParserRelaxed(JsonParserStrict):
 				return (True, retData)
 
 			if parsedData[0] in retData:
-				raise ParserErrorException(ts.location, "Syntax error: Duplicate property key detected: " + repr(parsedData[0]))
+				if not ctx.allowDuplicatePropertyNames:
+					raise ParserErrorException(ts.location, "Syntax error: Duplicate property key detected: " + repr(parsedData[0]))
 			retData[parsedData[0]] = parsedData[1]
 	#
+
+	################################################################################################################################
+	## Public Methods
+	################################################################################################################################
 
 #
 

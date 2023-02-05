@@ -25,3 +25,7 @@
 	* Fixed: Parameter verification bug
 	* Refactoring
 
+* 2023-02-05
+	* Refactoring
+	* Added tolerance for duplicate keys in JSON objects
+

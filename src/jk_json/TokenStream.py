@@ -29,8 +29,12 @@ class TokenStreamMark(object):
 
 class TokenStream(object):
 
-	def __init__(self, tokens):
-		self.__tokens = list(tokens)
+	################################################################################################################################
+	## Constructor
+	################################################################################################################################
+
+	def __init__(self, tokens:typing.Iterable[Token]):
+		self.__tokens:typing.List[Token] = list(tokens)
 		assert len(self.__tokens) > 0
 		self.__pos = 0
 		self.__maxpos = len(self.__tokens) - 1
@@ -38,25 +42,48 @@ class TokenStream(object):
 		assert self.__eosToken.type == "eos"
 	#
 
-	def reset(self):
-		self.__pos = 0
-	#
+	################################################################################################################################
+	## Public Properties
+	################################################################################################################################
 
 	@property
-	def isEOS(self):
+	def isEOS(self) -> bool:
 		return self.__pos == self.__maxpos
 	#
 
 	@property
-	def position(self):
+	def position(self) -> int:
 		return self.__pos
 	#
 
-	def mark(self):
+	@property
+	def location(self) -> SourceCodeLocation:
+		t = self.__tokens[self.__pos]
+		return SourceCodeLocation.fromToken(t)
+
+	################################################################################################################################
+	## Helper Methods
+	################################################################################################################################
+
+	def _setPosition(self, pos:int) -> None:
+		if (pos < 0) or (pos > self.__maxpos):
+			raise Exception("Invalid position: " + str(pos))
+		self.__pos = pos
+	#
+
+	################################################################################################################################
+	## Public Methods
+	################################################################################################################################
+
+	def reset(self):
+		self.__pos = 0
+	#
+
+	def mark(self) -> TokenStreamMark:
 		return TokenStreamMark(self)
 	#
 
-	def multiPeek(self, nCount):
+	def multiPeek(self, nCount) -> typing.List[Token]:
 		if nCount <= 0:
 			raise Exception("Invalid nCount!")
 		if self.__pos + nCount > self.__maxpos:
@@ -72,16 +99,11 @@ class TokenStream(object):
 			return self.__tokens[self.__pos:self.__pos + nCount]
 	#
 
-	@property
-	def location(self):
-		t = self.__tokens[self.__pos]
-		return SourceCodeLocation.fromToken(t)
-
-	def peek(self):
+	def peek(self) -> Token:
 		return self.__tokens[self.__pos]
 	#
 
-	def skip(self, n = 1):
+	def skip(self, n = 1) -> None:
 		if n < 0:
 			raise Exception("Invalid n: " + str(n))
 		if self.__pos + n > self.__maxpos:
@@ -89,7 +111,7 @@ class TokenStream(object):
 		self.__pos += n
 	#
 
-	def skipAll(self, tokenType, tokenText):
+	def skipAll(self, tokenType:str, tokenText:typing.Union[str,None]) -> int:
 		assert isinstance(tokenType, str)
 
 		n = 0
@@ -108,13 +130,7 @@ class TokenStream(object):
 		return n
 	#
 
-	def _setPosition(self, pos:int):
-		if (pos < 0) or (pos > self.__maxpos):
-			raise Exception("Invalid position: " + str(pos))
-		self.__pos = pos
-	#
-
-	def read(self):
+	def read(self) -> Token:
 		t = self.__tokens[self.__pos]
 		if self.__pos < self.__maxpos:
 			self.__pos += 1

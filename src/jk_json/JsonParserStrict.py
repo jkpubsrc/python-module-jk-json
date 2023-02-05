@@ -11,31 +11,24 @@ from .ParserBase import *
 
 class JsonParserStrict(ParserBase):
 
+	################################################################################################################################
+	## Constructor
+	################################################################################################################################
+
 	def __init__(self):
 		pass
 	#
 
-	#
-	# Parse the tokens. Construct an abstract syntax tree from the tokens provided by the tokenizer.
-	#
-	# @param	Tokenizer tokenizer		The tokenizer that provides the tokens.
-	#
-	def parse(self, tokenizer, bDebugging = False):
-		if isinstance(tokenizer, TokenStream):
-			ts = tokenizer
-		else:
-			ts = TokenStream(tokenizer)
+	################################################################################################################################
+	## Public Properties
+	################################################################################################################################
 
-		ctx = ParsingContext(bDebugging)
-		bSuccess, data = self._tryEat_S(ctx, ts)
-		if bSuccess:
-			return data
-		else:
-			raise Exception()
-	#
+	################################################################################################################################
+	## Helper Methods
+	################################################################################################################################
 
 	@debugDecorator
-	def _tryEat_S(self, ctx, ts):
+	def _tryEat_S(self, ctx:ParsingContext, ts:TokenStream):
 		# loc = ts.location
 
 		n = ts.skipAll("eol", None)
@@ -53,7 +46,7 @@ class JsonParserStrict(ParserBase):
 	#
 
 	@debugDecorator
-	def _tryEat_JANYVALUE(self, ctx, ts):
+	def _tryEat_JANYVALUE(self, ctx:ParsingContext, ts:TokenStream):
 		# loc = ts.location
 
 		t1 = ts.peek()
@@ -105,7 +98,7 @@ class JsonParserStrict(ParserBase):
 	#
 
 	@debugDecorator
-	def _tryEat_JARRAY(self, ctx, ts):
+	def _tryEat_JARRAY(self, ctx:ParsingContext, ts:TokenStream):
 		# loc = ts.location
 
 		t1 = ts.peek()
@@ -126,7 +119,7 @@ class JsonParserStrict(ParserBase):
 	#
 
 	@debugDecorator
-	def _tryEat_JVALUE_LIST(self, ctx, ts):
+	def _tryEat_JVALUE_LIST(self, ctx:ParsingContext, ts:TokenStream):
 		# loc = ts.location
 
 		retData = []
@@ -148,7 +141,7 @@ class JsonParserStrict(ParserBase):
 	#
 
 	@debugDecorator
-	def _tryEat_JOBJECT(self, ctx, ts):
+	def _tryEat_JOBJECT(self, ctx:ParsingContext, ts:TokenStream):
 		# loc = ts.location
 
 		t1 = ts.peek()
@@ -169,7 +162,7 @@ class JsonParserStrict(ParserBase):
 	#
 
 	@debugDecorator
-	def _tryEat_JPROPERTY_LIST(self, ctx, ts):
+	def _tryEat_JPROPERTY_LIST(self, ctx:ParsingContext, ts:TokenStream):
 		# loc = ts.location
 
 		retData = {}
@@ -197,7 +190,7 @@ class JsonParserStrict(ParserBase):
 	#
 
 	@debugDecorator
-	def _tryEat_JPROPERTY(self, ctx, ts):
+	def _tryEat_JPROPERTY(self, ctx:ParsingContext, ts:TokenStream):
 		# loc = ts.location
 
 		t1 = ts.peek()
@@ -215,6 +208,29 @@ class JsonParserStrict(ParserBase):
 			return (True, (t1.text, parsedData))
 
 		raise ParserErrorException(ts.location, "Syntax error: Expecting a valid JSON value!")
+	#
+
+	################################################################################################################################
+	## Public Methods
+	################################################################################################################################
+
+	#
+	# Parse the tokens. Construct an abstract syntax tree from the tokens provided by the tokenizer.
+	#
+	# @param	Tokenizer tokenizer		The tokenizer that provides the tokens.
+	#
+	def parse(self, tokenizer, bDebugging:bool = False, allowDuplicatePropertyNames:bool = False):
+		if isinstance(tokenizer, TokenStream):
+			ts = tokenizer
+		else:
+			ts = TokenStream(tokenizer)
+
+		ctx = ParsingContext(bDebugging, allowDuplicatePropertyNames)
+		bSuccess, data = self._tryEat_S(ctx, ts)
+		if bSuccess:
+			return data
+		else:
+			raise Exception()
 	#
 
 #

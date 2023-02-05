@@ -2,7 +2,7 @@
 
 
 __author__ = "Jürgen Knauth"
-__version__ = "0.2022.10.23"
+__version__ = "0.2023.2.5"
 
 
 
@@ -46,7 +46,13 @@ __tokenizerStrict = TokenizerStrict()
 #								are allowed and strings can be specified with single quotes and double quotes.
 #								Furthermore NaN, positive and negative infinitiy is supported.
 #
-def loads(textToParse:str, bStrict:bool = False, bDebugging:bool = False):
+def loads(
+		textToParse:str,
+		bStrict:bool = False,
+		bDebugging:bool = False,
+		allowDuplicatePropertyNames:bool = False,
+	):
+
 	assert isinstance(textToParse, str)
 	assert isinstance(bStrict, bool)
 	assert isinstance(bDebugging, bool)
@@ -63,7 +69,7 @@ def loads(textToParse:str, bStrict:bool = False, bDebugging:bool = False):
 		tokenizer = __tokenizerRelaxed
 		parser = __parserRelaxed
 
-	return parser.parse(tokenizer.tokenize(textToParse), bDebugging)
+	return parser.parse(tokenizer.tokenize(textToParse), bDebugging, allowDuplicatePropertyNames)
 #
 
 
@@ -76,9 +82,15 @@ def loads(textToParse:str, bStrict:bool = False, bDebugging:bool = False):
 #								are allowed and strings can be specified with single quotes and double quotes.
 #								Furthermore NaN, positive and negative infinitiy is supported.
 #
-def load(fp, bStrict = False, bDebugging = False):
+def load(
+		fp,
+		bStrict:bool = False,
+		bDebugging:bool = False,
+		allowDuplicatePropertyNames:bool = False,
+	):
+
 	rawData = fp.read()
-	return loads(rawData, bStrict = bStrict, bDebugging = bDebugging)
+	return loads(rawData, bStrict = bStrict, bDebugging = bDebugging, allowDuplicatePropertyNames = allowDuplicatePropertyNames)
 #
 
 
@@ -91,7 +103,16 @@ def load(fp, bStrict = False, bDebugging = False):
 #								are allowed and strings can be specified with single quotes and double quotes.
 #								Furthermore NaN, positive and negative infinitiy is supported.
 #
-def loadFromFile(filePath:str, bStrict:bool = False, bDebugging:bool = False, encoding:str = None, autoDetectEncoding:bool = True, errPrintFunc = None):
+def loadFromFile(
+		filePath:str,
+		bStrict:bool = False,
+		bDebugging:bool = False,
+		encoding:str = None,
+		autoDetectEncoding:bool = True,
+		errPrintFunc = None,
+		allowDuplicatePropertyNames:bool = False
+	):
+
 	assert isinstance(filePath, str)
 	assert isinstance(bStrict, bool)
 	assert isinstance(bDebugging, bool)
@@ -129,7 +150,7 @@ def loadFromFile(filePath:str, bStrict:bool = False, bDebugging:bool = False, en
 
 	if errPrintFunc and callable(errPrintFunc):
 		try:
-			return loads(textData, bStrict = bStrict, bDebugging = bDebugging)
+			return loads(textData, bStrict = bStrict, bDebugging = bDebugging, allowDuplicatePropertyNames = allowDuplicatePropertyNames)
 		except ParserErrorException as ee:
 			s = filePath if len(filePath) < 40 else ("..." + filePath[-40:])
 			prefix = "{}:{} ".format(s, ee.location.lineNo + 1)
@@ -138,7 +159,7 @@ def loadFromFile(filePath:str, bStrict:bool = False, bDebugging:bool = False, en
 			errPrintFunc(" " * (len(prefix) + ee.location.charPos + 1 - 6) + "╌╌╍╍━━┛")
 			raise
 	else:
-		return loads(textData, bStrict = bStrict, bDebugging = bDebugging)
+		return loads(textData, bStrict = bStrict, bDebugging = bDebugging, allowDuplicatePropertyNames = allowDuplicatePropertyNames)
 #
 
 
