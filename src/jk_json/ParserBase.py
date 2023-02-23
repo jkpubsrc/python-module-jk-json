@@ -105,7 +105,7 @@ class ParserBase(object):
 	#
 	# @param	Tokenizer tokenizer		The tokenizer that provides the tokens.
 	#
-	def parse(self, tokenizer, bDebugging = False):
+	def parse(self, tokenizer, bDebugging:bool = False, allowDuplicatePropertyNames:bool = False):
 		raise Exception("Overwrite this method")
 	#
 

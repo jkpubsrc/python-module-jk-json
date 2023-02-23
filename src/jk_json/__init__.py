@@ -2,7 +2,7 @@
 
 
 __author__ = "Jürgen Knauth"
-__version__ = "0.2023.2.5"
+__version__ = "0.2023.2.6"
 
 
 
@@ -21,6 +21,8 @@ from .TokenizerBase import TokenizerBase
 from .SourceCodeLocation import SourceCodeLocation
 from .ParserErrorException import ParserErrorException
 
+from .ParserBase import ParserBase, ParsingContext, ParserErrorException, debugDecorator
+
 from .TokenizerRelaxed import TokenizerRelaxed
 from .TokenizerStrict import TokenizerStrict
 from .JsonParserRelaxed import JsonParserRelaxed
@@ -29,11 +31,13 @@ from .JsonParserStrict import JsonParserStrict
 
 
 
-__parserRelaxed = JsonParserRelaxed()
-__tokenizerRelaxed = TokenizerRelaxed()
 
 __parserStrict = JsonParserStrict()
 __tokenizerStrict = TokenizerStrict()
+
+__parserRelaxed = JsonParserRelaxed()
+__tokenizerRelaxed = TokenizerRelaxed()
+
 
 
 
@@ -56,6 +60,9 @@ def loads(
 	assert isinstance(textToParse, str)
 	assert isinstance(bStrict, bool)
 	assert isinstance(bDebugging, bool)
+	assert isinstance(allowDuplicatePropertyNames, bool)
+
+	# ----
 
 	if isinstance(textToParse, (bytes, bytearray)):
 		textToParse = textToParse.decode("utf-8")
@@ -116,6 +123,8 @@ def loadFromFile(
 	assert isinstance(filePath, str)
 	assert isinstance(bStrict, bool)
 	assert isinstance(bDebugging, bool)
+
+	# ----
 
 	if filePath.endswith(".bz2"):
 		with bz2.open(filePath, "rb") as f:

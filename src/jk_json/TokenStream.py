@@ -60,6 +60,7 @@ class TokenStream(object):
 	def location(self) -> SourceCodeLocation:
 		t = self.__tokens[self.__pos]
 		return SourceCodeLocation.fromToken(t)
+	#
 
 	################################################################################################################################
 	## Helper Methods
