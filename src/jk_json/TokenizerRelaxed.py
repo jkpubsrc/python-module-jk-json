@@ -92,10 +92,10 @@ class TokenizerRelaxed(TokenizerBase):
 		super().__init__(tables)
 	#
 
-	def __convert4HexToUnicode(self, text):
+	def __convert4HexToUnicode(self, text:str) -> str:
+		# assert len(text) == 5
 		binData = binascii.unhexlify(text[1:])
-		# NOTE: truncating the data has been removed as this is erroneous
-		return binData.decode("utf-16-be")
+		return binData.decode("utf-16-be", "surrogatepass")
 	#
 
 #

@@ -258,6 +258,7 @@ class TokenizerBase(object):
 		if bDebuggingEnabled:
 			print("Now tokenizing " + str(maxi) + " characters ...")
 
+		# try:
 		buffer = ""
 		mode = 0
 		spanText = None
@@ -408,6 +409,8 @@ class TokenizerBase(object):
 		if bDebuggingEnabled:
 			print("Tokenizing completed.")
 
+		# except Exception as ee:
+		# 	raise ParserErrorException(SourceCodeLocation(sourceID, lineNo, charPos, lineNo, charPos), "Tokenization failed: " + str(ee), textData) from ee
 	#
 
 #

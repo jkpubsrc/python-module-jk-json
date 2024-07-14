@@ -2,7 +2,7 @@
 
 
 __author__ = "Jürgen Knauth"
-__version__ = "0.2023.2.6"
+__version__ = "0.2024.13"
 
 
 
@@ -215,6 +215,9 @@ def dumps(
 			comment = list(comment)
 		else:
 			raise Exception("fileComment has data of invalid type!")
+		
+	if cls is None:
+		cls = ObjectEncoder
 
 	# ----
 
@@ -281,6 +284,9 @@ def dump(
 			comment = list(comment)
 		else:
 			raise Exception("fileComment has data of invalid type!")
+
+	if cls is None:
+		cls = ObjectEncoder
 
 	# ----
 

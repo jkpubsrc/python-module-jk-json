@@ -29,3 +29,10 @@
 	* Refactoring
 	* Added tolerance for duplicate keys in JSON objects
 
+* 2024-04-01
+	* Fixed: default value for 'cls'
+
+* 2024-07-13
+	* Migrated to pyproject.toml
+	* Fixed: Bug decoding high surrogates
+

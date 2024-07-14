@@ -1,0 +1,61 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "jk_json"
+dynamic = [ "version" ]
+authors = [
+	{ name = "Jürgen Knauth", email = "pubsrc@binary-overflow.de" },
+]
+maintainers = [
+	{ name = "Jürgen Knauth", email = "pubsrc@binary-overflow.de" },
+]
+description = "This python module provides parser and validator for JSON files and data structures. The JSON parser is designed as a drop-in replacement for the built in python JSON parser as this parser here supports using comments in JSON files (which in some use cases is very a very handy feature)."
+readme = "README.md"
+requires-python = ">=3.8"
+keywords = [
+	"json",
+	"parsing",
+	"schema",
+]
+license = { text = "Apache2" }
+classifiers = [
+	# "Development Status :: 5 - Production/Stable",
+	"Development Status :: 3 - Alpha",
+	"Programming Language :: Python :: 3",
+]
+dependencies = [
+	"chardet",
+	"jk_typing",
+	"jk_prettyprintobj",
+	"jk_logging",
+	"jk_simpleexec",
+]
+
+#[project.urls]
+#Homepage = "https://example.com"
+#Documentation = "https://readthedocs.org"
+#Repository = "https://github.com/me/spam.git"
+#Changelog = "https://github.com/me/spam/blob/master/CHANGELOG.md"
+
+[project.scripts]
+jkhexdump = "jk_hexdump.bin:main"
+
+[tool.flit.sdist]
+exclude = [
+	"bin/",
+	"build/",
+	"dist/",
+	"sdist/",
+	"*.egg-info",
+	"*.OLD",
+	"setup.cfg",
+]
+
+#[project.scripts]
+
+
+
+
+
