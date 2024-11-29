@@ -10,7 +10,7 @@ The JSON parser is designed as a drop-in replacement for the built in python JSO
 
 Information about this module can be found here:
 
-* [github.org](https://github.com/jkpubsrc/python-module-jk-json)
+* [github.com](https://github.com/jkpubsrc/python-module-jk-json)
 * [pypi.python.org](https://pypi.python.org/pypi/jk_json)
 
 Why a replacement?
